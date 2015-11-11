@@ -15,6 +15,30 @@ var App = React.createClass({
   }
 });
 
+var Header = React.createClass({
+  render: function() {
+    return (
+      <p>Header</p>
+    );
+  }
+});
+
+var Order = React.createClass({
+  render: function() {
+    return (
+      <p>Order</p>
+    );
+  }
+});
+
+var Inventory = React.createClass({
+  render: function() {
+    return (
+      <p>Inventory</p>
+    );
+  }
+});
+
 var StorePicker = React.createClass({
   render: function() {
     var name = "wes";
