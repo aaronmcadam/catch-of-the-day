@@ -1,6 +1,20 @@
 var React = require("react");
 var ReactDom = require("react-dom");
 
+var App = React.createClass({
+  render: function() {
+    return (
+      <div className="catch-of-the-day">
+        <div className="menu">
+          <Header />
+        </div>
+        <Order />
+        <Inventory />
+      </div>
+    );
+  }
+});
+
 var StorePicker = React.createClass({
   render: function() {
     var name = "wes";
@@ -14,4 +28,4 @@ var StorePicker = React.createClass({
   }
 });
 
-ReactDom.render(<StorePicker/>, document.querySelector("#main"));
+ReactDom.render(<App />, document.querySelector("#main"));
