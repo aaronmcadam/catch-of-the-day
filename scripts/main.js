@@ -1,5 +1,9 @@
 var React = require("react");
 var ReactDom = require("react-dom");
+var ReactRouter = require("react-router");
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Navigation = ReactRouter.Navigation;
 
 var App = React.createClass({
   render: function() {
@@ -49,10 +53,9 @@ var Inventory = React.createClass({
 
 var StorePicker = React.createClass({
   render: function() {
-    var name = "wes";
     return (
       <form className="store-selector">
-        <h2>Please Enter A Store {name}</h2>
+        <h2>Please Enter A Store</h2>
         <input type="text" ref="storeId" />
         <input type="submit" />
       </form>
@@ -60,4 +63,11 @@ var StorePicker = React.createClass({
   }
 });
 
-ReactDom.render(<App />, document.querySelector("#main"));
+var routes = (
+  <Router>
+    <Route path="/" component={StorePicker} />
+    <Route path="/store/:storeId" component={App} />
+  </Router>
+);
+
+ReactDom.render(routes, document.querySelector("#main"));
