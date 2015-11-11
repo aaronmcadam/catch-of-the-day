@@ -4,6 +4,7 @@ var ReactRouter = require("react-router");
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
+var createHistory = require("history/lib/createBrowserHistory");
 
 var App = React.createClass({
   render: function() {
@@ -64,7 +65,7 @@ var StorePicker = React.createClass({
 });
 
 var routes = (
-  <Router>
+  <Router history={createHistory()}>
     <Route path="/" component={StorePicker} />
     <Route path="/store/:storeId" component={App} />
   </Router>
