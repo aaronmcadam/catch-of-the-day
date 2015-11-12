@@ -6,21 +6,31 @@ var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;
 var createHistory = require("history/lib/createBrowserHistory");
-
 var h = require("./helpers");
 var sampleFishes = require("./sample-fishes");
 
 var App = React.createClass({
   render: function() {
+    var fishes = Object.keys(this.state.fishes)
+
     return (
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market" />
+          <ul className="list-of-fishes">
+            {fishes.map(this.renderFish)}
+          </ul>
         </div>
         <Order />
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
       </div>
     );
+  },
+
+  renderFish: function(key) {
+    var fish = this.state.fishes[key];
+
+    return <Fish key={key} index={key} details={fish} />;
   },
 
   getInitialState: function() {
@@ -40,6 +50,23 @@ var App = React.createClass({
     this.setState({
       fishes: sampleFishes
     });
+  }
+});
+
+var Fish = React.createClass({
+  render: function() {
+    var details = this.props.details;
+
+    return (
+      <li className="menu-fish">
+        <img src={details.image} alt={details.name} />
+        <h3 className="fish-name">
+          {details.name}
+          <span className="price">{h.formatPrice(details.price)}</span>
+        </h3>
+        <p>{details.desc}</p>
+      </li>
+    );
   }
 });
 
