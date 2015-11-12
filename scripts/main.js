@@ -8,6 +8,7 @@ var History = ReactRouter.History;
 var createHistory = require("history/lib/createBrowserHistory");
 
 var h = require("./helpers");
+var sampleFishes = require("./sample-fishes");
 
 var App = React.createClass({
   render: function() {
@@ -17,7 +18,7 @@ var App = React.createClass({
           <Header tagline="Fresh Seafood Market" />
         </div>
         <Order />
-        <Inventory addFish={this.addFish} />
+        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
       </div>
     );
   },
@@ -33,6 +34,12 @@ var App = React.createClass({
     var timestamp = new Date().getTime();
     this.state.fishes["fish-" + timestamp] = fish;
     this.setState({ fishes: this.state.fishes });
+  },
+
+  loadSamples: function() {
+    this.setState({
+      fishes: sampleFishes
+    });
   }
 });
 
@@ -97,6 +104,7 @@ var Inventory = React.createClass({
       <div>
         <h2>Inventory</h2>
         <AddFishForm {...this.props} />
+        <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
       </div>
     );
   }
