@@ -30,7 +30,14 @@ var App = React.createClass({
   renderFish: function(key) {
     var fish = this.state.fishes[key];
 
-    return <Fish key={key} index={key} details={fish} />;
+    return (
+      <Fish
+        key={key}
+        index={key}
+        details={fish}
+        addToOrder={this.addToOrder}
+      />
+    );
   },
 
   getInitialState: function() {
@@ -50,12 +57,20 @@ var App = React.createClass({
     this.setState({
       fishes: sampleFishes
     });
+  },
+
+  addToOrder: function(key) {
+    this.state.order[key] = this.state.order[key] + 1 || 1;
+    this.setState({ order: this.state.order });
   }
 });
 
 var Fish = React.createClass({
   render: function() {
     var details = this.props.details;
+    var isAvailable = details.status === "available" ? true: false;
+    var isSoldOut = !isAvailable;
+    var buttonText = isAvailable ? "Add To Order" : "Sold Out";
 
     return (
       <li className="menu-fish">
@@ -65,8 +80,16 @@ var Fish = React.createClass({
           <span className="price">{h.formatPrice(details.price)}</span>
         </h3>
         <p>{details.desc}</p>
+        <button disabled={isSoldOut} onClick={this.addToOrder}>
+          {buttonText}
+        </button>
       </li>
     );
+  },
+
+  addToOrder: function() {
+    var key = this.props.index;
+    this.props.addToOrder(key);
   }
 });
 
@@ -82,7 +105,7 @@ var AddFishForm = React.createClass({
         </select>
         <textarea type="text" ref="desc" placeholder="Desc"></textarea>
         <input type="text" ref="image" placeholder="URL to Image" />
-        <button type="submit">+ Add Item </button>
+        <button type="submit">+ Add Item</button>
       </form>
     );
   },
@@ -144,7 +167,12 @@ var StorePicker = React.createClass({
     return (
       <form className="store-selector" onSubmit={this.goToStore}>
         <h2>Please Enter A Store</h2>
-        <input type="text" ref="storeId" defaultValue={h.getFunName()} required />
+        <input
+          type="text"
+          ref="storeId"
+          defaultValue={h.getFunName()}
+          required
+        />
         <input type="submit" />
       </form>
     );
