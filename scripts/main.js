@@ -191,7 +191,7 @@ var Order = React.createClass({
     subtotal = h.formatPrice(subtotal);
 
     return (
-      <li>
+      <li key={orderId}>
         <span>{count}</span>lbs
         {fish_name}
         <span className="price">{subtotal}</span>
