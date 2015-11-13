@@ -6,10 +6,19 @@ var Route = ReactRouter.Route;
 var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;
 var createHistory = require("history/lib/createBrowserHistory");
+var Rebase = require("re-base");
 var h = require("./helpers");
 var sampleFishes = require("./sample-fishes");
 
+var rebaseUrl = "https://az-catch-of-the-day.firebaseio.com/";
+var database = Rebase.createClass(rebaseUrl);
 var App = React.createClass({
+  componentDidMount: function() {
+    var path = this.props.params.storeId + "/fishes";
+    var payload = { context: this, state: "fishes" };
+    database.syncState(path, payload);
+  },
+
   render: function() {
     var fishes = Object.keys(this.state.fishes)
 
