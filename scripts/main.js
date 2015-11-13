@@ -237,14 +237,34 @@ var Inventory = React.createClass({
   },
 
   renderInventory: function(fishId) {
-    var key = "fishes." + fishId + ".name";
     var linkState = this.props.linkState;
+    var keys = this.keysFor(fishId);
 
     return (
       <div className="fish-edit" key={fishId}>
-        <input type="text" valueLink={linkState(key)} />
+        <input type="text" valueLink={linkState(keys.name)} />
+        <input type="text" valueLink={linkState(keys.price)} />
+        <select valueLink={linkState(keys.status)}>
+          <option value="available">Fresh!</option>
+          <option value="unavailable">Sold Out!</option>
+        </select>
+        <textarea valueLink={linkState(keys.desc)}></textarea>
+        <input type="text" valueLink={linkState(keys.image)} />
+        <button>Remove Fish</button>
       </div>
     );
+  },
+
+  keysFor: function(fishId) {
+    var keyBase = "fishes." + fishId + ".";
+
+    return {
+      name: keyBase + "name",
+      price: keyBase + "price",
+      status: keyBase + "status",
+      desc: keyBase + "desc",
+      image: keyBase + "image"
+    }
   }
 });
 
