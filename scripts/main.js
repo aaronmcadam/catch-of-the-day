@@ -7,12 +7,15 @@ var Navigation = ReactRouter.Navigation;
 var History = ReactRouter.History;
 var createHistory = require("history/lib/createBrowserHistory");
 var Rebase = require("re-base");
+var Catalyst = require("react-catalyst");
 var h = require("./helpers");
 var sampleFishes = require("./sample-fishes");
 
 var rebaseUrl = "https://az-catch-of-the-day.firebaseio.com/";
 var database = Rebase.createClass(rebaseUrl);
 var App = React.createClass({
+  mixins: [Catalyst.LinkedStateMixin],
+
   componentDidMount: function() {
     var path = this.props.params.storeId + "/fishes";
     var payload = { context: this, state: "fishes" };
@@ -45,7 +48,12 @@ var App = React.createClass({
           </ul>
         </div>
         <Order fishes={this.state.fishes} order={this.state.order} />
-        <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
+        <Inventory
+          addFish={this.addFish}
+          loadSamples={this.loadSamples}
+          fishes={this.state.fishes}
+          linkState={this.linkState}
+        />
       </div>
     );
   },
@@ -141,7 +149,7 @@ var AddFishForm = React.createClass({
       status: this.refs.status.value,
       desc: this.refs.desc.value,
       image: this.refs.image.value
-    }
+    };
     this.props.addFish(fish);
     this.refs.fishForm.reset();
   }
@@ -216,11 +224,25 @@ var Order = React.createClass({
 
 var Inventory = React.createClass({
   render: function() {
+    var fishes = Object.keys(this.props.fishes);
+
     return (
       <div>
         <h2>Inventory</h2>
+        {fishes.map(this.renderInventory)}
         <AddFishForm {...this.props} />
         <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
+      </div>
+    );
+  },
+
+  renderInventory: function(fishId) {
+    var key = "fishes." + fishId + ".name";
+    var linkState = this.props.linkState;
+
+    return (
+      <div className="fish-edit" key={fishId}>
+        <input type="text" valueLink={linkState(key)} />
       </div>
     );
   }
