@@ -17,6 +17,20 @@ var App = React.createClass({
     var path = this.props.params.storeId + "/fishes";
     var payload = { context: this, state: "fishes" };
     database.syncState(path, payload);
+
+    var key = "order-" + this.props.params.storeId;
+    var localStorageRef = window.localStorage.getItem(key);
+    if (localStorageRef) {
+      this.setState({
+        order: window.JSON.parse(localStorageRef)
+      });
+    }
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    var key = "order-" + this.props.params.storeId;
+    var value = window.JSON.stringify(nextState.order);
+    window.localStorage.setItem(key, value);
   },
 
   render: function() {
@@ -191,7 +205,7 @@ var Order = React.createClass({
     subtotal = h.formatPrice(subtotal);
 
     return (
-      <li>
+      <li key={orderId}>
         <span>{count}</span>lbs
         {fish_name}
         <span className="price">{subtotal}</span>
