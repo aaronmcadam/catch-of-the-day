@@ -53,6 +53,7 @@ var App = React.createClass({
           loadSamples={this.loadSamples}
           fishes={this.state.fishes}
           linkState={this.linkState}
+          removeFish={this.removeFish}
         />
       </div>
     );
@@ -81,6 +82,15 @@ var App = React.createClass({
   addFish: function(fish) {
     var timestamp = new Date().getTime();
     this.state.fishes["fish-" + timestamp] = fish;
+    this.setState({ fishes: this.state.fishes });
+  },
+
+  removeFish: function(key) {
+    if (!confirm("Are you sure you want to remove this fish?")) {
+      return;
+    }
+
+    this.state.fishes[key] = null;
     this.setState({ fishes: this.state.fishes });
   },
 
@@ -237,8 +247,9 @@ var Inventory = React.createClass({
   },
 
   renderInventory: function(fishId) {
-    var linkState = this.props.linkState;
     var keys = this.keysFor(fishId);
+    var linkState = this.props.linkState;
+    var removeFish = this.props.removeFish.bind(null, fishId)
 
     return (
       <div className="fish-edit" key={fishId}>
@@ -250,7 +261,7 @@ var Inventory = React.createClass({
         </select>
         <textarea valueLink={linkState(keys.desc)}></textarea>
         <input type="text" valueLink={linkState(keys.image)} />
-        <button>Remove Fish</button>
+        <button onClick={removeFish}>Remove Fish</button>
       </div>
     );
   },
