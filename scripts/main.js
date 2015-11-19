@@ -176,6 +176,10 @@ var AddFishForm = React.createClass({
 });
 
 var Header = React.createClass({
+  propTypes: {
+    tagline: React.PropTypes.string.isRequired
+  },
+
   render: function() {
     return (
       <header className="top">
@@ -192,6 +196,12 @@ var Header = React.createClass({
 });
 
 var Order = React.createClass({
+  propTypes: {
+    fishes: React.PropTypes.object.isRequired,
+    order: React.PropTypes.object.isRequired,
+    removeFromOrder: React.PropTypes.func.isRequired
+  },
+
   render: function() {
     var orderIds = Object.keys(this.props.order);
     var total = orderIds.reduce((prevTotal, orderId)=> {
@@ -263,6 +273,14 @@ var Order = React.createClass({
 });
 
 var Inventory = React.createClass({
+  propTypes: {
+    addFish: React.PropTypes.func.isRequired,
+    loadSamples: React.PropTypes.func.isRequired,
+    fishes: React.PropTypes.object.isRequired,
+    linkState: React.PropTypes.func.isRequired,
+    removeFish: React.PropTypes.func.isRequired
+  },
+
   render: function() {
     var fishes = Object.keys(this.props.fishes);
 
