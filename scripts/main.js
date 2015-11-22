@@ -16,6 +16,7 @@ var database = Rebase.createClass(rebaseUrl);
 import NotFound from "./components/NotFound";
 import StorePicker from "./components/StorePicker";
 import Fish from "./components/Fish";
+import AddFishForm from "./components/AddFishForm";
 
 var App = React.createClass({
   mixins: [Catalyst.LinkedStateMixin],
@@ -116,37 +117,6 @@ var App = React.createClass({
   removeFromOrder: function(key) {
     delete this.state.order[key];
     this.setState({ order: this.state.order });
-  }
-});
-
-var AddFishForm = React.createClass({
-  render: function() {
-    return (
-      <form className="fish-edit" ref="fishForm" onSubmit={this.createFish}>
-        <input type="text" ref="name" placeholder="Fish Name"/>
-        <input type="text" ref="price" placeholder="Fish Price" />
-        <select ref="status">
-          <option value="available">Fresh!</option>
-          <option value="unavailable">Sold Out!</option>
-        </select>
-        <textarea type="text" ref="desc" placeholder="Desc"></textarea>
-        <input type="text" ref="image" placeholder="URL to Image" />
-        <button type="submit">+ Add Item</button>
-      </form>
-    );
-  },
-
-  createFish: function(event) {
-    event.preventDefault();
-    var fish = {
-      name: this.refs.name.value,
-      price: this.refs.price.value,
-      status: this.refs.status.value,
-      desc: this.refs.desc.value,
-      image: this.refs.image.value
-    };
-    this.props.addFish(fish);
-    this.refs.fishForm.reset();
   }
 });
 
