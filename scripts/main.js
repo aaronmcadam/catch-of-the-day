@@ -4,8 +4,6 @@ var CssTransitionGroup = require("react-addons-css-transition-group");
 var ReactRouter = require("react-router");
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
-var Navigation = ReactRouter.Navigation;
-var History = ReactRouter.History;
 var createHistory = require("history/lib/createBrowserHistory");
 var Rebase = require("re-base");
 var Catalyst = require("react-catalyst");
@@ -14,6 +12,10 @@ var sampleFishes = require("./sample-fishes");
 
 var rebaseUrl = "https://az-catch-of-the-day.firebaseio.com/";
 var database = Rebase.createClass(rebaseUrl);
+
+import NotFound from "./components/NotFound";
+import StorePicker from "./components/StorePicker";
+
 var App = React.createClass({
   mixins: [Catalyst.LinkedStateMixin],
 
@@ -324,37 +326,6 @@ var Inventory = React.createClass({
       desc: keyBase + "desc",
       image: keyBase + "image"
     }
-  }
-});
-
-var StorePicker = React.createClass({
-  mixins: [History],
-
-  render: function() {
-    return (
-      <form className="store-selector" onSubmit={this.goToStore}>
-        <h2>Please Enter A Store</h2>
-        <input
-          type="text"
-          ref="storeId"
-          defaultValue={h.getFunName()}
-          required
-        />
-        <input type="submit" />
-      </form>
-    );
-  },
-
-  goToStore: function(event) {
-    event.preventDefault();
-    var storeId = this.refs.storeId.value;
-    this.history.pushState(null, "/store/" + storeId);
-  }
-});
-
-var NotFound = React.createClass({
-  render: function() {
-    return <h1>Not Found!</h1>
   }
 });
 
