@@ -23,7 +23,7 @@ var StorePicker = React.createClass({
   goToStore: function(event) {
     event.preventDefault();
     var storeId = this.refs.storeId.value;
-    this.history.pushState(null, "/store/" + storeId);
+    this.history.pushState(null, `/store/${storeId}`);
   }
 });
 

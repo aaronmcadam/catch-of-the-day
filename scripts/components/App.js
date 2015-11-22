@@ -14,11 +14,11 @@ var App = React.createClass({
   mixins: [Catalyst.LinkedStateMixin],
 
   componentDidMount: function() {
-    var path = this.props.params.storeId + "/fishes";
+    var path = `${this.props.params.storeId}/fishes`;
     var payload = { context: this, state: "fishes" };
     database.syncState(path, payload);
 
-    var key = "order-" + this.props.params.storeId;
+    var key = `order-${this.props.params.storeId}`;
     var localStorageRef = window.localStorage.getItem(key);
     if (localStorageRef) {
       this.setState({
@@ -28,7 +28,7 @@ var App = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    var key = "order-" + this.props.params.storeId;
+    var key = `order-${this.props.params.storeId}`;
     var value = window.JSON.stringify(nextState.order);
     window.localStorage.setItem(key, value);
   },
@@ -82,7 +82,7 @@ var App = React.createClass({
 
   addFish: function(fish) {
     var timestamp = new Date().getTime();
-    this.state.fishes["fish-" + timestamp] = fish;
+    this.state.fishes[`fish-${timestamp}`] = fish;
     this.setState({ fishes: this.state.fishes });
   },
 
