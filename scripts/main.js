@@ -1,6 +1,5 @@
 var React = require("react");
 var ReactDom = require("react-dom");
-var CssTransitionGroup = require("react-addons-css-transition-group");
 var ReactRouter = require("react-router");
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -16,6 +15,7 @@ var database = Rebase.createClass(rebaseUrl);
 import NotFound from "./components/NotFound";
 import StorePicker from "./components/StorePicker";
 import Header from "./components/Header";
+import Order from "./components/Order";
 import Fish from "./components/Fish";
 import AddFishForm from "./components/AddFishForm";
 
@@ -118,83 +118,6 @@ var App = React.createClass({
   removeFromOrder: function(key) {
     delete this.state.order[key];
     this.setState({ order: this.state.order });
-  }
-});
-
-var Order = React.createClass({
-  propTypes: {
-    fishes: React.PropTypes.object.isRequired,
-    order: React.PropTypes.object.isRequired,
-    removeFromOrder: React.PropTypes.func.isRequired
-  },
-
-  render: function() {
-    var orderIds = Object.keys(this.props.order);
-    var total = orderIds.reduce((prevTotal, orderId)=> {
-      var fish = this.props.fishes[orderId];
-      var count = this.props.order[orderId];
-      var isAvailable = fish && fish.status === "available";
-
-      if (fish && isAvailable) {
-        return prevTotal + (count * window.parseInt(fish.price) || 0);
-      }
-
-      return prevTotal;
-    }, 0);
-
-    return (
-      <div className="order-wrap">
-        <h2 className="order-title">Your Order</h2>
-        <CssTransitionGroup
-          className="order"
-          component="ul"
-          transitionName="order"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-         >
-          {orderIds.map(this.renderOrder)}
-          <li className="total">
-            <strong>Total:</strong>
-            {h.formatPrice(total)}
-          </li>
-        </CssTransitionGroup>
-      </div>
-    );
-  },
-
-  renderOrder: function(orderId) {
-    var fish = this.props.fishes[orderId];
-    var removeFromOrder = this.props.removeFromOrder.bind(null, orderId)
-    var removeButton = <button onClick={removeFromOrder}>&times;</button>
-
-    if (!fish) {
-      return (
-        <li key={orderId}>Sorry, fish no longer available! {removeButton}</li>
-      )
-    }
-
-    var count = this.props.order[orderId];
-    var fish_name = fish.name;
-    var subtotal = count * fish.price;
-    subtotal = h.formatPrice(subtotal);
-
-    return (
-      <li key={orderId}>
-        <span>
-        <CssTransitionGroup
-          component="span"
-          transitionName="count"
-          transitionEnterTimeout={250}
-          transitionLeaveTimeout={250}
-          className="count"
-        >
-          <span key={count}>{count}</span>
-        </CssTransitionGroup>
-        lbs {fish_name} {removeButton}
-        </span>
-        <span className="price">{subtotal}</span>
-      </li>
-    );
   }
 });
 
