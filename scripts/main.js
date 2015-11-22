@@ -15,6 +15,7 @@ var database = Rebase.createClass(rebaseUrl);
 
 import NotFound from "./components/NotFound";
 import StorePicker from "./components/StorePicker";
+import Header from "./components/Header";
 import Fish from "./components/Fish";
 import AddFishForm from "./components/AddFishForm";
 
@@ -117,26 +118,6 @@ var App = React.createClass({
   removeFromOrder: function(key) {
     delete this.state.order[key];
     this.setState({ order: this.state.order });
-  }
-});
-
-var Header = React.createClass({
-  propTypes: {
-    tagline: React.PropTypes.string.isRequired
-  },
-
-  render: function() {
-    return (
-      <header className="top">
-        <h1>Catch
-          <span className="ofThe">
-          <span className="of">of</span>
-          <span className="the">the</span>
-          </span>
-          Day</h1>
-        <h3 className="tagline"><span>{this.props.tagline}</span></h3>
-      </header>
-    );
   }
 });
 
