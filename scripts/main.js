@@ -1,10 +1,7 @@
-var React = require("react");
-var ReactDom = require("react-dom");
-var ReactRouter = require("react-router");
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var createHistory = require("history/lib/createBrowserHistory");
-var sampleFishes = require("./sample-fishes");
+import React from "react";
+import ReactDom from "react-dom";
+import {Router, Route} from "react-router";
+import { createHistory } from "history";
 
 import NotFound from "./components/NotFound";
 import StorePicker from "./components/StorePicker";

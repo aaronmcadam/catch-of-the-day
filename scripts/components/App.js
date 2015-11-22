@@ -5,6 +5,7 @@ import Header from "./Header";
 import Order from "./Order";
 import Inventory from "./Inventory";
 import Fish from "./Fish";
+import sampleFishes from "../sample-fishes";
 
 var rebaseUrl = "https://az-catch-of-the-day.firebaseio.com/";
 var database = Rebase.createClass(rebaseUrl);
