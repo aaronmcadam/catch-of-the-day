@@ -15,6 +15,7 @@ var database = Rebase.createClass(rebaseUrl);
 
 import NotFound from "./components/NotFound";
 import StorePicker from "./components/StorePicker";
+import Fish from "./components/Fish";
 
 var App = React.createClass({
   mixins: [Catalyst.LinkedStateMixin],
@@ -115,34 +116,6 @@ var App = React.createClass({
   removeFromOrder: function(key) {
     delete this.state.order[key];
     this.setState({ order: this.state.order });
-  }
-});
-
-var Fish = React.createClass({
-  render: function() {
-    var details = this.props.details;
-    var isAvailable = details.status === "available" ? true: false;
-    var isSoldOut = !isAvailable;
-    var buttonText = isAvailable ? "Add To Order" : "Sold Out";
-
-    return (
-      <li className="menu-fish">
-        <img src={details.image} alt={details.name} />
-        <h3 className="fish-name">
-          {details.name}
-          <span className="price">{h.formatPrice(details.price)}</span>
-        </h3>
-        <p>{details.desc}</p>
-        <button disabled={isSoldOut} onClick={this.addToOrder}>
-          {buttonText}
-        </button>
-      </li>
-    );
-  },
-
-  addToOrder: function() {
-    var key = this.props.index;
-    this.props.addToOrder(key);
   }
 });
 
