@@ -44,14 +44,14 @@ var Inventory = React.createClass({
   },
 
   keysFor: function(fishId) {
-    var keyBase = "fishes." + fishId + ".";
+    var keyBase = `fishes.${fishId}.`;
 
     return {
-      name: keyBase + "name",
-      price: keyBase + "price",
-      status: keyBase + "status",
-      desc: keyBase + "desc",
-      image: keyBase + "image"
+      name: `${keyBase}name`,
+      price: `${keyBase}price`,
+      status: `${keyBase}status`,
+      desc: `${keyBase}desc`,
+      image: `${keyBase}image`
     }
   }
 });
